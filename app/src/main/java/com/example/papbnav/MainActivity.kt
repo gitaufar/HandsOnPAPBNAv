@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.papbnav.ui.navigation.RootNavGraph
 import com.example.papbnav.ui.theme.PAPBNavTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,10 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PAPBNavTheme {
-                Text(
-                    text = "Hello Compose Navigation",
-                    style = MaterialTheme.typography.headlineSmall
-                )
+                val navController = rememberNavController()
+                RootNavGraph(navController = navController)
             }
         }
     }
