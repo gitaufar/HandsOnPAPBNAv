@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.navigation.compose.*
 import com.example.papbnav.ui.screens.AddScreen
 import com.example.papbnav.ui.screens.DetailScreen
 import com.example.papbnav.ui.screens.HomeScreen
+import com.example.papbnav.ui.screens.StoreScreen
 import com.example.papbnav.ui.screens.ProfileScreen
 import com.example.papbnav.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
@@ -30,12 +32,15 @@ sealed class BottomItem(
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
     data object Home : BottomItem(Routes.HOME, "Home", Icons.Filled.Home)
+    data object Store : BottomItem(Routes.STORE, "Store", Icons.Filled.Store)
+
     data object Profile : BottomItem(Routes.PROFILE, "Profile", Icons.Filled.Person)
     data object Settings : BottomItem(Routes.SETTINGS, "Settings", Icons.Filled.Settings)
 }
 
 private val bottomItems = listOf(
     BottomItem.Home,
+    BottomItem.Store,
     BottomItem.Profile,
     BottomItem.Settings
 )
@@ -141,6 +146,11 @@ private fun AppDrawer(onNavigate: (String) -> Unit) {
             onClick = { onNavigate(Routes.HOME) }
         )
         NavigationDrawerItem(
+            label = { Text("Store") },
+            selected = false,
+            onClick = { onNavigate(Routes.STORE) }
+        )
+        NavigationDrawerItem(
             label = { Text("Profile") },
             selected = false,
             onClick = { onNavigate(Routes.PROFILE) }
@@ -161,6 +171,7 @@ private fun MainNavHost(navController: NavHostController) {
             val id = backStack.arguments?.getString("id")
             DetailScreen(navController, id)
         }
+        composable(Routes.STORE) { StoreScreen() }
         composable(Routes.PROFILE) { ProfileScreen() }
         composable(Routes.SETTINGS) { SettingsScreen() }
         composable(Routes.ADD) { AddScreen(navController) }
