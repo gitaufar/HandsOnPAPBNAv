@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import com.example.papbnav.ui.screens.PlaceholderHomeScreen
 import com.example.papbnav.ui.screens.SplashScreen
 
 @Composable
@@ -16,11 +14,10 @@ fun RootNavGraph(
         navController = navController,
         startDestination = Routes.SPLASH
     ) {
-        // 1) Splash sebagai start
+        // Splash tetap sama
         composable(Routes.SPLASH) {
             SplashScreen(
                 onFinished = {
-                    // Pindah ke main_graph dan hapus splash dari back stack
                     navController.navigate(Routes.MAIN_GRAPH) {
                         popUpTo(Routes.SPLASH) { inclusive = true }
                         launchSingleTop = true
@@ -28,14 +25,10 @@ fun RootNavGraph(
                 }
             )
         }
-        // 2) Main graph (akan diisi pada langkah berikut)
-        navigation(
-            startDestination = Routes.HOME,
-            route = Routes.MAIN_GRAPH
-        ) {
-            // Untuk sementara, definisikan minimal satu layar agar bisa dicoba
-            composable(Routes.HOME) { PlaceholderHomeScreen() }
-            // Nanti di Langkah 3+ kita tambah: DETAIL, PROFILE, SETTINGS, ADD
+
+        // Langkah 3.1: Ganti navigation(...) dengan satu composable MAIN_GRAPH
+        composable(Routes.MAIN_GRAPH) {
+            MainScaffold() // Ini akan kamu buat di langkah 3.2
         }
     }
 }
